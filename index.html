@@ -241,23 +241,30 @@ html[data-fs="l"] .opt{font-size:21px;} html[data-fs="xl"] .opt{font-size:25px;m
     <h1>相続した家と土地、<br><span class="em">どうする</span>か決まっていますか</h1>
     <p class="desc">5つの質問に答えるだけで、いま選べる道と、いつまでに動けばよいかが分かります。
     お名前やメールアドレスの入力はありません。</p>
-    <svg class="hero-art" viewBox="0 0 420 190" role="img"
-         aria-label="家と土地、そして名義の書類を表した図">
-      <rect x="0" y="0" width="420" height="190" fill="none"/>
+    <svg class="hero-art" viewBox="0 0 440 210" role="img"
+         aria-label="相続関係説明図から、実家の家屋と土地、そして名義の書類へつながる図">
+      <!-- 相続関係説明図。相続登記で実際に描く書類で、このサイトの主題そのもの -->
+      <rect x="36" y="10" width="46" height="22" rx="3" fill="#FFF" stroke="#1F4E6B" stroke-width="2.6"/>
+      <path d="M42 15 l34 12 M76 15 l-34 12" stroke="#B5442E" stroke-width="2.2" stroke-linecap="round"/>
+      <path d="M59 32 v14 M22 46 h74 M22 46 v12 M59 46 v12 M96 46 v12" stroke="#1F4E6B" stroke-width="2.4" stroke-linecap="round"/>
+      <rect x="6" y="58" width="32" height="20" rx="3" fill="#FFF" stroke="#1F4E6B" stroke-width="2.4"/>
+      <rect x="43" y="58" width="32" height="20" rx="3" fill="#FFF" stroke="#1F4E6B" stroke-width="2.4"/>
+      <rect x="80" y="58" width="32" height="20" rx="3" fill="#FFF" stroke="#1F4E6B" stroke-width="2.4"/>
+      <path d="M124 68 h26 m-8-6 8 6 -8 6" fill="none" stroke="#1F4E6B" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/>
       <!-- 土地 -->
-      <path d="M24 156 L200 118 L396 156 L200 178 Z" fill="#EFEADD" stroke="#1F4E6B" stroke-width="2.5" stroke-linejoin="round"/>
-      <!-- 家 -->
-      <path d="M96 118 V64 L152 30 L208 64 V118" fill="#FFFFFF" stroke="#1F4E6B" stroke-width="3.5" stroke-linejoin="round"/>
-      <path d="M84 68 L152 24 L220 68" fill="none" stroke="#1F4E6B" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"/>
-      <rect x="118" y="82" width="26" height="26" fill="none" stroke="#1F4E6B" stroke-width="2.5"/>
-      <rect x="164" y="82" width="22" height="36" fill="none" stroke="#1F4E6B" stroke-width="2.5"/>
-      <!-- 権利証 -->
-      <rect x="252" y="52" width="104" height="76" rx="4" fill="#FFFFFF" stroke="#1F4E6B" stroke-width="3"/>
-      <path d="M268 74 H332 M268 90 H332 M268 106 H310" stroke="#1F4E6B" stroke-width="2.5" stroke-linecap="round"/>
-      <!-- 朱印 -->
-      <circle cx="342" cy="116" r="19" fill="#B5442E" opacity=".14"/>
-      <circle cx="342" cy="116" r="19" fill="none" stroke="#B5442E" stroke-width="3"/>
-      <path d="M334 116 h16 M342 108 v16" stroke="#B5442E" stroke-width="3" stroke-linecap="round"/>
+      <path d="M120 176 L262 142 L420 176 L262 196 Z" fill="#EFEADD" stroke="#1F4E6B" stroke-width="2.5" stroke-linejoin="round"/>
+      <!-- 瓦屋根の実家 -->
+      <path d="M150 92 q56-38 112 0" fill="none" stroke="#1F4E6B" stroke-width="3.4" stroke-linecap="round"/>
+      <path d="M150 92 h112" stroke="#1F4E6B" stroke-width="3.4" stroke-linecap="round"/>
+      <path d="M162 92 v50 h88 V92" fill="#FFF" stroke="#1F4E6B" stroke-width="3.2" stroke-linejoin="round"/>
+      <path d="M180 142 V112 h20 v30" fill="none" stroke="#B5442E" stroke-width="3" stroke-linejoin="round"/>
+      <rect x="214" y="110" width="24" height="20" fill="none" stroke="#1F4E6B" stroke-width="2.6"/>
+      <!-- 権利証と朱印 -->
+      <rect x="296" y="60" width="98" height="72" rx="4" fill="#FFF" stroke="#1F4E6B" stroke-width="3"/>
+      <path d="M312 80 H378 M312 96 H378 M312 112 H356" stroke="#1F4E6B" stroke-width="2.4" stroke-linecap="round"/>
+      <circle cx="382" cy="120" r="18" fill="#B5442E" opacity=".14"/>
+      <circle cx="382" cy="120" r="18" fill="none" stroke="#B5442E" stroke-width="3"/>
+      <rect x="374" y="112" width="16" height="16" fill="none" stroke="#B5442E" stroke-width="2.4"/>
     </svg>
   </div>
 
@@ -278,10 +285,11 @@ html[data-fs="l"] .opt{font-size:21px;} html[data-fs="xl"] .opt{font-size:25px;m
     <div class="q" data-q="0">
       <span class="num">質問 1 / 5</span>
       <div class="qhead"><svg class="qicon" viewBox="0 0 48 48" aria-hidden="true">
-  <rect x="7" y="11" width="34" height="30" rx="4" fill="none" stroke="#1F4E6B" stroke-width="3"/>
-  <path d="M7 20 H41 M16 6 v9 M32 6 v9" stroke="#1F4E6B" stroke-width="3" stroke-linecap="round"/>
-  <circle cx="24" cy="30" r="6" fill="none" stroke="#B5442E" stroke-width="3"/>
-  <path d="M24 27 v3.4 l2.4 1.6" stroke="#B5442E" stroke-width="2.6" stroke-linecap="round" fill="none"/>
+  <path d="M10 8 h22 a6 6 0 0 1 6 6 v26 a6 6 0 0 1-6 6 H10 Z" fill="#FFF" stroke="#1F4E6B" stroke-width="3" stroke-linejoin="round"/>
+  <path d="M15 8 v38 M20 8 v38" stroke="#1F4E6B" stroke-width="1.6" opacity=".45"/>
+  <path d="M26 15 v16 M31 15 v12" stroke="#1F4E6B" stroke-width="2.4" stroke-linecap="round"/>
+  <circle cx="30" cy="38" r="6" fill="#B5442E" opacity=".15"/>
+  <circle cx="30" cy="38" r="6" fill="none" stroke="#B5442E" stroke-width="2.4"/>
 </svg>
       <h2>相続が起きたのは、いつですか</h2></div>
       <p class="hint">お亡くなりになったことを知った日から数えてください。</p>
@@ -296,9 +304,11 @@ html[data-fs="l"] .opt{font-size:21px;} html[data-fs="xl"] .opt{font-size:25px;m
     <div class="q" data-q="1">
       <span class="num">質問 2 / 5</span>
       <div class="qhead"><svg class="qicon" viewBox="0 0 48 48" aria-hidden="true">
-  <path d="M11 41 V21 L24 11 L37 21 V41 Z" fill="none" stroke="#1F4E6B" stroke-width="3" stroke-linejoin="round"/>
-  <path d="M6 24 L24 8 L42 24" fill="none" stroke="#1F4E6B" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
-  <path d="M19 41 v-9 h10 v9" fill="none" stroke="#B5442E" stroke-width="3" stroke-linejoin="round"/>
+  <path d="M4 20 q20-14 40 0" fill="none" stroke="#1F4E6B" stroke-width="3" stroke-linecap="round"/>
+  <path d="M9 20 h30 v22 H9 Z" fill="#FFF" stroke="#1F4E6B" stroke-width="3" stroke-linejoin="round"/>
+  <path d="M4 20 h40" stroke="#1F4E6B" stroke-width="3" stroke-linecap="round"/>
+  <path d="M15 42 V28 h8 v14" fill="none" stroke="#B5442E" stroke-width="2.8" stroke-linejoin="round"/>
+  <path d="M28 28 h7 v8 h-7 Z" fill="none" stroke="#1F4E6B" stroke-width="2.4"/>
 </svg>
       <h2>建物は残っていますか</h2></div>
       <p class="hint">母屋のほか、離れや倉庫も建物にあたります。</p>
@@ -312,10 +322,12 @@ html[data-fs="l"] .opt{font-size:21px;} html[data-fs="xl"] .opt{font-size:25px;m
     <div class="q" data-q="2">
       <span class="num">質問 3 / 5</span>
       <div class="qhead"><svg class="qicon" viewBox="0 0 48 48" aria-hidden="true">
-  <circle cx="17" cy="17" r="7" fill="none" stroke="#1F4E6B" stroke-width="3"/>
-  <path d="M6 40 c0-7 5-11 11-11 s11 4 11 11" fill="none" stroke="#1F4E6B" stroke-width="3" stroke-linecap="round"/>
-  <circle cx="34" cy="19" r="6" fill="none" stroke="#B5442E" stroke-width="3"/>
-  <path d="M26 40 c0-6 4-9 8-9 s8 3 8 9" fill="none" stroke="#B5442E" stroke-width="3" stroke-linecap="round"/>
+  <rect x="17" y="5" width="14" height="10" rx="2" fill="#FFF" stroke="#1F4E6B" stroke-width="2.6"/>
+  <path d="M19 7 l10 6 M29 7 l-10 6" stroke="#B5442E" stroke-width="2.2" stroke-linecap="round"/>
+  <path d="M24 15 v8 M8 23 h32 M8 23 v6 M24 23 v6 M40 23 v6" stroke="#1F4E6B" stroke-width="2.6" stroke-linecap="round"/>
+  <rect x="2" y="29" width="12" height="10" rx="2" fill="#FFF" stroke="#1F4E6B" stroke-width="2.6"/>
+  <rect x="18" y="29" width="12" height="10" rx="2" fill="#FFF" stroke="#1F4E6B" stroke-width="2.6"/>
+  <rect x="34" y="29" width="12" height="10" rx="2" fill="#FFF" stroke="#1F4E6B" stroke-width="2.6"/>
 </svg>
       <h2>名義はどうなっていますか</h2></div>
       <p class="hint">登記簿（権利証）に書かれている持ち主のことです。</p>
@@ -367,10 +379,12 @@ html[data-fs="l"] .opt{font-size:21px;} html[data-fs="xl"] .opt{font-size:25px;m
     <div class="q" data-q="4">
       <span class="num">質問 5 / 5</span>
       <div class="qhead"><svg class="qicon" viewBox="0 0 48 48" aria-hidden="true">
-  <rect x="9" y="7" width="30" height="34" rx="4" fill="none" stroke="#1F4E6B" stroke-width="3"/>
-  <path d="M16 17 l3.4 3.4 L26 14" fill="none" stroke="#B5442E" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
-  <path d="M16 28 l3.4 3.4 L26 25" fill="none" stroke="#B5442E" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
-  <path d="M30 18 h4 M30 29 h4" stroke="#1F4E6B" stroke-width="3" stroke-linecap="round"/>
+  <rect x="6" y="6" width="24" height="30" rx="3" fill="#FFF" stroke="#1F4E6B" stroke-width="2.8"/>
+  <path d="M11 14 h14 M11 21 h14 M11 28 h9" stroke="#1F4E6B" stroke-width="2.2" stroke-linecap="round"/>
+  <rect x="30" y="10" width="9" height="18" rx="2" fill="#EFEADD" stroke="#1F4E6B" stroke-width="2.6"/>
+  <circle cx="30" cy="34" r="9" fill="#B5442E" opacity=".16"/>
+  <circle cx="30" cy="34" r="9" fill="none" stroke="#B5442E" stroke-width="2.8"/>
+  <rect x="26" y="30" width="8" height="8" fill="none" stroke="#B5442E" stroke-width="2.2"/>
 </svg>
       <h2>当てはまるものはありますか</h2></div>
       <p class="hint">いくつでも選べます。当てはまらない場合は「特にない」を押してください。</p>
