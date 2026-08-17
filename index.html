@@ -495,12 +495,13 @@ function judge(){
          "仲介と違って買い手を探す必要がないため、価格は下がりますが早く手放せます。"]});
     tags.push("専門買取");
   }else if(st[0] !== "pre"){
+    hard.push("相続売却");   // 障害は無いが、相続した不動産であることに変わりはない
     cards.push({k:"ok", b:"売りやすい", h:"一般の不動産会社でも扱える見込みです",
       p:["大きな障害は見当たりません。まず複数社に査定を出して、"+
          "価格と手取りを比べるところから始めてください。"]});
   }
 
-  return {cards:cards, tags:tags, needBuy:(hard.length > 0)};
+  return {cards:cards, tags:tags, hard:hard, needBuy:(hard.length > 0)};
 }
 
 // ===== 表示 =====
@@ -544,13 +545,28 @@ document.getElementById("go").addEventListener("click", function(){
          '<h3>' + c.h + '</h3>' + c.p.map(function(x){ return "<p>" + x + "</p>"; }).join("") + '</div>';
   });
 
+  // 名義変更(相続登記)は来訪者のほぼ全員に必要だが、A8に対応する案件が存在しない。
+  // 無理に何かへ送らず、公的な窓口を案内する。中立性の担保にもなる。
+  if(st[0] !== "pre"){
+    h += '<div class="act" style="border-color:#2E6B4B;background:#E6F0EA">' +
+         '<h3>名義変更の相談先</h3>' +
+         '<p>相続登記は法務局で手続きします。手続きの進め方は' +
+         '<strong>法務局の無料相談</strong>で聞けます（予約制）。' +
+         '書類集めが難しい場合は、お住まいの都道府県の司法書士会でも相談できます。' +
+         'ここは当サイトが紹介料を受け取らない案内です。</p></div>';
+  }
+
   if(r.needBuy && typeof BUYERS !== "undefined"){
-    var live = BUYERS.filter(function(b){ return b.url.indexOf("http") === 0; });
+    // 回答から出た事情に当てはまる会社だけを出す。全員に同じ2社を出さない
+    var live = BUYERS.filter(function(b){
+      if(b.url.indexOf("http") !== 0) return false;
+      return b.need.some(function(n){ return r.hard.indexOf(n) >= 0; });
+    });
     if(live.length){
       h += '<div class="act"><h3>まず、いくらになるか確かめる</h3>' +
            '<p>手放すと決めていなくても、金額が分かると考えやすくなります。' +
            '下の会社は、こうした事情のある不動産を専門に買い取っています。査定は無料です。</p>';
-      live.slice(0,2).forEach(function(b){
+      live.slice(0,3).forEach(function(b){
         h += '<a href="' + b.url + '" target="_blank" rel="nofollow noopener" ' +
              'onclick="track(\'site_click\',{name:\'' + b.name + '\'})">' +
              b.name + 'に無料で査定を頼む</a>' +
@@ -610,12 +626,21 @@ document.getElementById("go").addEventListener("click", function(){
   el.scrollIntoView({behavior:"smooth", block:"start"});
 });
 
-// ===== 買取会社(A8提携。承認され次第 a8_link_sync.py が実リンクを入れる) =====
-// 並び順は実効EPC(EPC×確定率)で決める。報酬単価では並べない。
+// ===== 送客先 =====
+// 2026-08-17: 5問の判定は文章としては1,248通りに分岐するのに、送客先が
+// 「出るか出ないか」の2通りしか無かった。診断を名乗る以上それでは弱いので、
+// 事情ごとに着地ページを変える。ラクウルは訳アリ買取・相続売却・空き家で
+// 別プログラム(=別の着地ページ)を持っているため、実質的な出し分けになる。
+// need に書いた事情のどれかに当てはまったときだけ、その会社を出す。
 var BUYERS = [
-  {name:"ラクウル", url:"#rakuuru", note:"訳あり不動産の買取専門。査定の申し込みだけで費用はかかりません",  key:"rakuuru"},   // s00000024144001
-  {name:"成仏不動産", url:"#jobutsu", note:"事故・事件のあった物件を専門に扱う会社です",                key:"jobutsu"},   // s00000026779001
-  {name:"ラクウル（空き家）", url:"#rakuuru_akiya", note:"空き家・中古戸建ての買取に対応しています",      key:"rakuuru_akiya"} // s00000024144003
+  {name:"成仏不動産", url:"#jobutsu", need:["事故"],
+   note:"事故や事件のあった物件を専門に扱う会社です",              key:"jobutsu"},        // s00000026779001
+  {name:"ラクウル 訳アリ物件買取", url:"#rakuuru", need:["再建築不可","共有","農地"],
+   note:"再建築できない土地や共有名義など、扱いの難しい不動産の専門です", key:"rakuuru"},        // s00000024144001
+  {name:"ラクウル 空き家・中古戸建", url:"#rakuuru_akiya", need:["老朽"],
+   note:"傷んだ建物が残ったままでも査定できます",                  key:"rakuuru_akiya"},  // s00000024144003
+  {name:"ラクウル 相続した不動産の売却", url:"#rakuuru_souzoku", need:["相続売却"],
+   note:"相続した不動産の売却相談に対応しています",                key:"rakuuru_souzoku"} // s00000024144002
 ];
 </script>
 </body>
