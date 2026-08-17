@@ -558,15 +558,22 @@ document.getElementById("go").addEventListener("click", function(){
 
   if(r.needBuy && typeof BUYERS !== "undefined"){
     // 回答から出た事情に当てはまる会社だけを出す。全員に同じ2社を出さない
-    var live = BUYERS.filter(function(b){
+    var matched = BUYERS.filter(function(b){
       if(b.url.indexOf("http") !== 0) return false;
       return b.need.some(function(n){ return r.hard.indexOf(n) >= 0; });
     });
+    // 広告主ごとに1社だけ残す(同一広告主への重複申込は否認されるため)
+    var picked = {};
+    matched.forEach(function(b){
+      if(!picked[b.adv] || b.rank < picked[b.adv].rank) picked[b.adv] = b;
+    });
+    var live = Object.keys(picked).map(function(k){ return picked[k]; })
+                     .sort(function(a,b){ return a.rank - b.rank; });
     if(live.length){
       h += '<div class="act"><h3>まず、いくらになるか確かめる</h3>' +
            '<p>手放すと決めていなくても、金額が分かると考えやすくなります。' +
            '下の会社は、こうした事情のある不動産を専門に買い取っています。査定は無料です。</p>';
-      live.slice(0,3).forEach(function(b){
+      live.slice(0,2).forEach(function(b){
         h += '<a href="' + b.url + '" target="_blank" rel="nofollow noopener" ' +
              'onclick="track(\'site_click\',{name:\'' + b.name + '\'})">' +
              b.name + 'に無料で査定を頼む</a>' +
@@ -632,15 +639,20 @@ document.getElementById("go").addEventListener("click", function(){
 // 事情ごとに着地ページを変える。ラクウルは訳アリ買取・相続売却・空き家で
 // 別プログラム(=別の着地ページ)を持っているため、実質的な出し分けになる。
 // need に書いた事情のどれかに当てはまったときだけ、その会社を出す。
+// adv は広告主。**同じ広告主のプログラムを同じ人に複数出してはいけない。**
+// 実測(2026-08-17): ラクウルの3プログラムは全て 株式会社ネクサスプロパティマネジメント で、
+// 成果条件が「広告主新規(当広告主を初めて利用する方)」、否認条件に「1世帯2回以上の申込」がある。
+// 着地ページが違っても成果は1回きりで、2件目はむしろ否認条件に当たる。
+// そのため広告主ごとに1社へ絞り、rank の小さい(=より具体的に合っている)ものを選ぶ。
 var BUYERS = [
-  {name:"成仏不動産", url:"#jobutsu", need:["事故"],
-   note:"事故や事件のあった物件を専門に扱う会社です",              key:"jobutsu"},        // s00000026779001
-  {name:"ラクウル 訳アリ物件買取", url:"#rakuuru", need:["再建築不可","共有","農地"],
-   note:"再建築できない土地や共有名義など、扱いの難しい不動産の専門です", key:"rakuuru"},        // s00000024144001
-  {name:"ラクウル 空き家・中古戸建", url:"#rakuuru_akiya", need:["老朽"],
-   note:"傷んだ建物が残ったままでも査定できます",                  key:"rakuuru_akiya"},  // s00000024144003
-  {name:"ラクウル 相続した不動産の売却", url:"#rakuuru_souzoku", need:["相続売却"],
-   note:"相続した不動産の売却相談に対応しています",                key:"rakuuru_souzoku"} // s00000024144002
+  {name:"成仏不動産", url:"#jobutsu", adv:"marks", rank:1, need:["事故"],
+   note:"事故や事件のあった物件を専門に扱う会社です。現地で本人確認があります", key:"jobutsu"},        // s00000026779001
+  {name:"ラクウル 訳アリ物件買取", url:"#rakuuru", adv:"nexus", rank:1, need:["再建築不可","共有","農地"],
+   note:"再建築できない土地や共有名義など、扱いの難しい不動産の専門です",       key:"rakuuru"},        // s00000024144001
+  {name:"ラクウル 空き家・中古戸建", url:"#rakuuru_akiya", adv:"nexus", rank:2, need:["老朽"],
+   note:"傷んだ建物が残ったままでも査定できます",                             key:"rakuuru_akiya"},  // s00000024144003
+  {name:"ラクウル 相続した不動産の売却", url:"#rakuuru_souzoku", adv:"nexus", rank:3, need:["相続売却"],
+   note:"相続した不動産の売却相談に対応しています",                           key:"rakuuru_souzoku"} // s00000024144002
 ];
 </script>
 </body>
