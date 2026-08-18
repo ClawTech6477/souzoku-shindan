@@ -91,3 +91,17 @@ footer .disc a{color:#6E6860;font-weight:400;}
 
 @media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important;}
   html{scroll-behavior:auto;}}
+
+/* ---- 本文内の相談リンク(2026-08-18追加) ----
+   助言の直後という自然な位置にだけ置く。本文を覆うポップアップは使わない。
+   シニア層は閉じ方が分からず離脱しやすく、検索評価上も不利になるため。
+   広告であることは各リンクの直近に明示する(フッタの表記だけに頼らない)。 */
+.ask{border:2px solid var(--ai);border-radius:10px;background:var(--ai-bg);
+  padding:18px 20px;margin:22px 0;}
+.ask b{font-family:var(--f-min);display:block;font-size:18px;margin-bottom:8px;}
+.ask p{font-size:16.5px;color:var(--ink-sub);margin:0 0 14px;}
+.ask a{display:block;background:var(--ai);color:#fff;text-decoration:none;
+  font-weight:700;font-size:18px;text-align:center;padding:17px;border-radius:8px;
+  min-height:56px;line-height:1.5;}
+.ask a:hover{background:var(--ai-deep);}
+.ask .pr{font-size:12.5px;color:#6E6860;text-align:center;margin:10px 0 0;}
