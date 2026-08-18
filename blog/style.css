@@ -105,3 +105,11 @@ footer .disc a{color:#6E6860;font-weight:400;}
   min-height:56px;line-height:1.5;}
 .ask a:hover{background:var(--ai-deep);}
 .ask .pr{font-size:12.5px;color:#6E6860;text-align:center;margin:10px 0 0;}
+
+/* ---- 早い段階の導線(2026-08-18追加) ----
+   診断リンクが本文の7割地点(最下部のCTA)にしかなく、
+   3,300字を読み切った人しか辿り着けなかった。
+   結論の直後と中盤にも短い導線を置く。カードではなく1行にとどめる。 */
+.jump{background:var(--shu-bg);border-left:7px solid var(--shu);
+  border-radius:0 10px 10px 0;padding:14px 18px;margin:22px 0;font-size:17.5px;}
+.jump a{font-weight:700;}
