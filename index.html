@@ -750,9 +750,14 @@ var BUYERS = [
   {name:"ラクウル 空き家・中古戸建", url:"#rakuuru_akiya",   // s00000024144003
    adv:"nexus", rank:2, need:["老朽"],
    note:"傷んだ建物が残ったままでも査定できます", key:"rakuuru_akiya"},
+  // rank3 = 受け皿。上位(訳アリ/空き家)が未承認で出せない間も、
+  // 相続した不動産である以上この窓口は誰にでも当てはまるので必ず1件は出す。
+  // 広告主は上位2件と同じ(nexus)なので、重複して出ることはない。
+  // 上位が承認されたら自動的にそちらが優先される(rankの小さい方が勝つ)。
   {name:"ラクウル 相続した不動産の売却", url:"https://px.a8.net/svt/ejp?a8mat=4BA7XB+8J7QGY+56AO+BWVTE",   // s00000024144002
-   adv:"nexus", rank:3, need:["相続売却"],
-   note:"相続した不動産の売却相談に対応しています", key:"rakuuru_souzoku"}
+   adv:"nexus", rank:3,
+   need:["相続売却","再建築不可","共有","農地","老朽","事故"],
+   note:"相続した不動産の売却相談に対応しています。査定は無料です", key:"rakuuru_souzoku"}
 ];
 </script>
 </body>
