@@ -738,14 +738,21 @@ document.getElementById("go").addEventListener("click", function(){
 // 着地ページが違っても成果は1回きりで、2件目はむしろ否認条件に当たる。
 // そのため広告主ごとに1社へ絞り、rank の小さい(=より具体的に合っている)ものを選ぶ。
 var BUYERS = [
-  {name:"成仏不動産", url:"#jobutsu", adv:"marks", rank:1, need:["事故"],
-   note:"事故や事件のあった物件を専門に扱う会社です。現地で本人確認があります", key:"jobutsu"},        // s00000026779001
-  {name:"ラクウル 訳アリ物件買取", url:"#rakuuru", adv:"nexus", rank:1, need:["再建築不可","共有","農地"],
-   note:"再建築できない土地や共有名義など、扱いの難しい不動産の専門です",       key:"rakuuru"},        // s00000024144001
-  {name:"ラクウル 空き家・中古戸建", url:"#rakuuru_akiya", adv:"nexus", rank:2, need:["老朽"],
-   note:"傷んだ建物が残ったままでも査定できます",                             key:"rakuuru_akiya"},  // s00000024144003
-  {name:"ラクウル 相続した不動産の売却", url:"#rakuuru_souzoku", adv:"nexus", rank:3, need:["相続売却"],
-   note:"相続した不動産の売却相談に対応しています",                           key:"rakuuru_souzoku"} // s00000024144002
+  // ★ a8_link_sync.py が「url の行末にある // sXXXXXXXXX」を見て承認済みリンクへ
+  //   自動置換する。**pidのコメントは必ず url と同じ行に置くこと**
+  //   (別行にすると置換対象として認識されない。2026-08-18に実際に取りこぼした)
+  {name:"成仏不動産", url:"#jobutsu",   // s00000026779001
+   adv:"marks", rank:1, need:["事故"],
+   note:"事故や事件のあった物件を専門に扱う会社です。現地で本人確認があります", key:"jobutsu"},
+  {name:"ラクウル 訳アリ物件買取", url:"#rakuuru",   // s00000024144001
+   adv:"nexus", rank:1, need:["再建築不可","共有","農地"],
+   note:"再建築できない土地や共有名義など、扱いの難しい不動産の専門です", key:"rakuuru"},
+  {name:"ラクウル 空き家・中古戸建", url:"#rakuuru_akiya",   // s00000024144003
+   adv:"nexus", rank:2, need:["老朽"],
+   note:"傷んだ建物が残ったままでも査定できます", key:"rakuuru_akiya"},
+  {name:"ラクウル 相続した不動産の売却", url:"https://px.a8.net/svt/ejp?a8mat=4BA7XB+8J7QGY+56AO+BWVTE",   // s00000024144002
+   adv:"nexus", rank:3, need:["相続売却"],
+   note:"相続した不動産の売却相談に対応しています", key:"rakuuru_souzoku"}
 ];
 </script>
 </body>
