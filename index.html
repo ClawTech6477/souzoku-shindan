@@ -574,16 +574,24 @@ function judge(){
 
   // --- 売るときの状態 ---
   var hard = [];
-  if(st[3] === "narrow") hard.push("建て替えができない土地の可能性");
-  if(st[2] === "share")  hard.push("共有名義");
-  if(has("jiko"))        hard.push("事故・事件のあった物件");
-  if(st[1] === "old")    hard.push("傷んだ建物が残っている");
-  if(has("farm"))        hard.push("農地・山林");
+  if(st[3] === "narrow") hard.push("再建築不可");
+  if(st[2] === "share")  hard.push("共有");
+  if(has("jiko"))        hard.push("事故");
+  if(st[1] === "old")    hard.push("老朽");
+  if(has("farm"))        hard.push("農地");
+
+  var HARD_LABELS = {
+    "再建築不可": "建て替えができない土地の可能性",
+    "共有": "共有名義",
+    "事故": "事故・事件のあった物件",
+    "老朽": "傷んだ建物が残っている",
+    "農地": "農地・山林"
+  };
 
   if(hard.length){
     cards.push({k:"alert", b:"ふつうの不動産屋では断られやすい", h:"専門の買取業者を探す必要があります",
       p:["次の事情があるため、一般の仲介では買い手がつきにくい種類にあたります。",
-         "・" + hard.join("<br>・"),
+         "・" + hard.map(function(k){ return HARD_LABELS[k] || k; }).join("<br>・"),
          "こうした物件だけを専門に扱う買取会社があります。"+
          "仲介と違って買い手を探す必要がないため、価格は下がりますが早く手放せます。"]});
     tags.push("専門買取");
