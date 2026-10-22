@@ -687,6 +687,40 @@ document.getElementById("go").addEventListener("click", function(){
   // 「家族に見せたい・残したい」需要は実在するが、手段は印刷ではない。
   // プリンタのある家庭は少数で、この層はスマホで見ている。
   // OSの共有シートを開けば LINE・メール・メモ保存・PDF保存まで一度に賄える。
+  // 遺品・動産査定セクション（相続後全員向け）
+  if(st[0] !== "pre" && typeof ITEMS !== "undefined"){
+    var liveItems = ITEMS.filter(function(it){ return it.url.indexOf("http") === 0; });
+    if(liveItems.length){
+      h += '<div class="act"><h3>遺品・家財の査定</h3>' +
+           '<p>不動産だけでなく、家の中に残った品物（美術品・骨董・掛け軸・時計・切手など）も' +
+           '査定で現金化できます。引き取り後の処分まで対応する会社もあります。</p>';
+      liveItems.slice(0,2).forEach(function(it){
+        h += '<a href="' + it.url + '" target="_blank" rel="nofollow noopener" ' +
+             'onclick="track(\'site_click\',{name:\'' + it.name + '\'})">' +
+             it.name + 'に無料で査定を頼む</a>' +
+             '<p class="free">' + it.note + '</p>';
+      });
+      h += '</div>';
+    }
+  }
+  // 税理士・相続手続きセクション
+  if(st[0] !== "pre" && typeof ADVISORS !== "undefined"){
+    var liveAdv = ADVISORS.filter(function(a){ return a.url.indexOf("http") === 0; });
+    if(liveAdv.length){
+      h += '<div class="act" style="border-color:#4A6FA5;background:#EDF2FB">' +
+           '<h3>相続税・手続きの相談</h3>' +
+           '<p>相続税は申告期限が相続開始から10か月です。' +
+           '税額を抑えられる控除・特例もあるので、早めに専門家に確認しておくと安心です。</p>';
+      liveAdv.slice(0,2).forEach(function(a){
+        h += '<a href="' + a.url + '" target="_blank" rel="nofollow noopener" ' +
+             'onclick="track(\'site_click\',{name:\'' + a.name + '\'})">' +
+             a.name + 'に無料で相談する</a>' +
+             '<p class="free">' + a.note + '</p>';
+      });
+      h += '</div>';
+    }
+  }
+
   h += '<div class="tools">' +
        '<button type="button" id="share">この結果を家族に送る・保存する</button>' +
        '<button type="button" onclick="location.reload()">はじめからやり直す</button>' +
@@ -758,7 +792,25 @@ var BUYERS = [
    adv:"nexus", rank:3,
    need:["相続売却","再建築不可","共有","農地","老朽","事故"],
    note:"相続した不動産の売却相談に対応しています。査定は無料です", key:"rakuuru_souzoku"}
+];
 
+// 遺品・動産の査定会社。承認後 a8_link_sync.py が自動でurl置換する
+// ★ 同一広告主(quore=ウリエル3件)は最もEPCが高い切手1件だけ出す
+var ITEMS = [
+  {name:"出張買取ウリエル（切手・骨董・時計など）", url:"#s00000026456010",   // s00000026456010
+   note:"切手・毛皮・ブランド時計・骨董品の出張買取。遺品整理に対応。査定無料"},
+  {name:"絵画・美術品買取 獏", url:"#s00000023923001",   // s00000023923001
+   note:"絵画・掛け軸・壺・花瓶など美術品の出張買取。真作の鑑定から。査定無料"}
+];
+
+// 相続税・手続きの専門家。承認後 a8_link_sync.py が自動でurl置換する
+var ADVISORS = [
+  {name:"税理士ドットコム（相続税申告）", url:"#s00000014783001",   // s00000014783001
+   note:"全国の税理士を無料で紹介。相続税申告・節税対策の実績多数"},
+  {name:"nocos 相続手続きサービス", url:"#s00000026317001",   // s00000026317001
+   note:"不動産・預金・名義変更をまとめてサポート。手続き代行まで対応"},
+  {name:"おやとこ（家族信託）", url:"#s00000025525001",   // s00000025525001
+   note:"親の存命中に認知症・資産凍結を防ぐ「家族信託」の無料相談"}
 ];
 </script>
 </body>
