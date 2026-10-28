@@ -3,17 +3,21 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-<meta name="theme-color" content="#FBF8F2">
+<meta name="theme-color" content="#f5f6f8" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#0e1015" media="(prefers-color-scheme: dark)">
 <link rel="icon" href='data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64"><rect width="64" height="64" rx="10" fill="%23FBF8F2"/><path d="M14 30 32 16l18 14v18a2 2 0 0 1-2 2H16a2 2 0 0 1-2-2z" fill="none" stroke="%231F4E6B" stroke-width="4" stroke-linejoin="round"/><circle cx="46" cy="46" r="11" fill="%23B5442E"/></svg>'>
 
-<title>相続した家と土地 どうする診断｜5つの質問で進む道がわかる</title>
-<meta name="description" content="相続した実家や土地をどうすればいいか、5つの質問に答えるだけで整理できます。相続登記の期限、国に引き取ってもらえるか、相続放棄が間に合うか、売るしかないのか。登録不要・無料。">
+<title>相続した実家・土地はどうする？売る・国に引き取ってもらう・放棄を5問で診断｜登録不要</title>
+<meta name="description" content="相続した実家や土地をどうするか、5つの質問をタップするだけで整理できます。相続登記の期限まであと何日か、国に引き取ってもらえる（相続土地国庫帰属）か、相続放棄が間に合うか、売るならどこに頼むか。名前・電話番号の入力なし、約1分。">
 <link rel="canonical" href="https://souzoku.clawtechjp.com/">
 <meta property="og:type" content="website">
 <meta property="og:title" content="相続した家と土地 どうする診断">
 <meta property="og:description" content="5つの質問で、相続登記の期限と、あなたが選べる道が分かります。登録不要・無料。">
 <meta property="og:url" content="https://souzoku.clawtechjp.com/">
 
+<link rel="stylesheet" href="ui/ct-ui.css">
+<script src="ui/ct-motion.js" defer></script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"WebApplication","name":"相続した家と土地 どうする診断","url":"https://souzoku.clawtechjp.com/","applicationCategory":"UtilityApplication","operatingSystem":"Web","inLanguage":"ja","offers":{"@type":"Offer","price":"0","priceCurrency":"JPY"},"description":"相続した実家・土地について、相続登記の期限、相続土地国庫帰属制度、相続放棄、売却の可否を5つの質問で整理する無料の診断"}</script>
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-RZ1TP2K3N0"></script>
 <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-RZ1TP2K3N0');</script>
 
@@ -28,19 +32,22 @@
    相続の文脈なので配色は生成りの紙と藍。黒×グレーは葬儀の印象になるため避ける。
    ============================================================ */
 :root{
-  --paper:#FBF8F2;
-  --paper-2:#FFFFFF;
-  --paper-3:#F2EDE2;
-  --ink:#1C1A17;
-  --ink-sub:#4A453E;      /* 説明文もこの濃さまで。薄くしない */
-  --line:#CFC7B8;
-  --ai:#1F4E6B;           /* 藍。信頼と落ち着き */
-  --ai-deep:#163B52;
-  --ai-bg:#E8EFF4;
-  --shu:#B5442E;          /* 朱。期限と注意 */
-  --shu-bg:#F7E9E5;
-  --midori:#2E6B4B;       /* 使える道 */
-  --midori-bg:#E6F0EA;
+  /* 値は共通UI(ui/ct-ui.css)のトークン。ここでは役割の名前を付け替えるだけ */
+  --paper:var(--ct-bg);
+  --paper-2:var(--ct-surface);
+  --paper-3:var(--ct-surface-2);
+  --ink:var(--ct-text);
+  --ink-sub:var(--ct-text-2);      /* 説明文もこの濃さまで。薄くしない */
+  --line:var(--ct-line-strong);
+  --ai:var(--ct-accent);
+  --ai-deep:var(--ct-accent-press);
+  --ai-ink:var(--ct-link);         /* 面の上に置く濃い文字色 */
+  --ai-bg:var(--ct-accent-soft);
+  --on-ai:var(--ct-on-accent);
+  --shu:var(--ct-error);           /* 期限と注意 */
+  --shu-bg:var(--ct-error-soft);
+  --midori:var(--ct-ok-text);      /* 使える道 */
+  --midori-bg:var(--ct-ok-soft);
   --f-min:"Hiragino Mincho ProN","Yu Mincho","YuMincho","Noto Serif JP",serif;
   --f-body:"Hiragino Sans","Yu Gothic","YuGothic","Noto Sans JP",sans-serif;
   --f-num:ui-monospace,SFMono-Regular,Menlo,monospace;
@@ -54,7 +61,7 @@ body{
   padding-bottom:env(safe-area-inset-bottom);
 }
 .wrap{max-width:680px;margin:0 auto;padding:0 20px;}
-a{color:var(--ai-deep);}
+a{color:var(--ai-ink);}
 :focus-visible{outline:4px solid var(--shu);outline-offset:3px;}
 
 /* ---- ヘッダー ---- */
@@ -96,7 +103,7 @@ html[data-fs="xl"] .q .qicon{width:62px;height:62px;}
 /* ---- 質問 ---- */
 .q{background:var(--paper-2);border:2px solid var(--line);border-radius:10px;
   padding:24px 20px;margin:20px 0;}
-.q .num{display:inline-block;background:var(--ai);color:#fff;font-weight:700;
+.q .num{display:inline-block;background:var(--ai);color:var(--on-ai);font-weight:700;
   font-size:16px;padding:6px 14px;border-radius:6px;margin-bottom:14px;}
 .q h2{font-family:var(--f-min);font-size:23px;line-height:1.55;font-weight:700;}
 .q .hint{font-size:16px;color:var(--ink-sub);margin-top:10px;}
@@ -115,18 +122,20 @@ html[data-fs="xl"] .q .qicon{width:62px;height:62px;}
 .opt[aria-pressed="true"]::before{content:"✓ ";color:var(--ai);font-size:20px;}
 .opt .sub{display:block;font-weight:400;font-size:16px;color:var(--ink-sub);margin-top:4px;}
 
-.progress{font-size:17px;font-weight:700;color:var(--ai-deep);
+.progress{font-size:17px;font-weight:700;color:var(--ai-ink);
   background:var(--ai-bg);border-radius:6px;padding:10px 16px;
   text-align:center;margin:24px 0 0;}
 
 .btn{
   display:block;width:100%;min-height:68px;margin:26px 0 0;
-  background:var(--shu);color:#fff;border:none;border-radius:8px;
+  background:var(--ai);color:var(--on-ai);border:none;border-radius:var(--ct-r-pill);
   font-family:inherit;font-size:21px;font-weight:700;cursor:pointer;
-  padding:18px;line-height:1.5;
+  padding:18px;line-height:1.5;text-align:center;text-decoration:none;
+  box-shadow:var(--ct-shadow-1);transition:background var(--ct-dur-1),transform var(--ct-dur-1);
 }
-.btn:hover{background:#9C3826;}
-.btn:disabled{background:#B9B2A6;cursor:not-allowed;}
+.btn:hover{background:var(--ai-deep);}
+.btn:active{transform:scale(.98);}
+.btn:disabled{background:var(--line);cursor:not-allowed;}
 .miss{display:none;font-size:18px;font-weight:700;color:var(--shu);
   background:var(--shu-bg);border:2px solid var(--shu);border-radius:8px;
   padding:14px 16px;margin-top:14px;line-height:1.7;}
@@ -154,7 +163,7 @@ html[data-fs="xl"] .q .qicon{width:62px;height:62px;}
   padding:22px;margin:26px 0;}
 .act h3{font-family:var(--f-min);font-size:22px;margin-bottom:10px;}
 .act p{font-size:17px;color:var(--ink-sub);margin-bottom:16px;}
-.act a{display:block;background:var(--ai);color:#fff;text-decoration:none;
+.act a{display:block;background:var(--ai);color:var(--on-ai);text-decoration:none;
   font-weight:700;font-size:19px;text-align:center;padding:20px;border-radius:8px;
   min-height:64px;line-height:1.5;}
 .act a:hover{background:var(--ai-deep);}
@@ -170,14 +179,14 @@ html[data-fs="xl"] .q .qicon{width:62px;height:62px;}
   padding-bottom:10px;margin-bottom:8px;}
 .reads a{display:block;padding:20px 4px;border-bottom:1px solid var(--line);
   text-decoration:none;color:var(--ink);font-size:18px;font-weight:700;line-height:1.6;}
-.reads a:hover{color:var(--ai-deep);}
+.reads a:hover{color:var(--ai-ink);}
 .reads a span{display:block;font-weight:400;font-size:16px;color:var(--ink-sub);margin-top:6px;}
 
 /* 広告表示は法令上の義務なので消さない。読める範囲で最小にして目立たせない */
 footer{margin-top:52px;border-top:1px solid var(--line);padding:20px 0 36px;}
-footer .disc{font-size:12.5px;color:#6E6860;line-height:1.75;}
-footer .run{font-size:12.5px;color:#6E6860;margin-top:8px;}
-footer a{color:#6E6860;}
+footer .disc{font-size:12.5px;color:var(--ct-text-3);line-height:1.75;}
+footer .run{font-size:12.5px;color:var(--ct-text-3);margin-top:8px;}
+footer a{color:var(--ct-text-3);}
 
 /* ---- 文字サイズ切替。行政・シニア向けサイトの定番で、実際に使われる機能 ---- */
 .sizebar{display:flex;align-items:center;gap:10px;flex-wrap:wrap;
@@ -187,7 +196,7 @@ footer a{color:#6E6860;}
 .sizebar button{min-height:48px;min-width:64px;font-family:inherit;font-weight:700;
   border:2px solid var(--line);background:var(--paper-2);color:var(--ink);
   border-radius:6px;cursor:pointer;padding:8px 14px;}
-.sizebar button[aria-pressed="true"]{background:var(--ai);color:#fff;border-color:var(--ai);}
+.sizebar button[aria-pressed="true"]{background:var(--ai);color:var(--on-ai);border-color:var(--ai);}
 .sizebar button.s1{font-size:15px;} .sizebar button.s2{font-size:19px;} .sizebar button.s3{font-size:23px;}
 html[data-fs="l"] body{font-size:22px;}
 html[data-fs="xl"] body{font-size:26px;}
@@ -198,7 +207,7 @@ html[data-fs="l"] .opt{font-size:21px;} html[data-fs="xl"] .opt{font-size:25px;m
 .rsum{border:3px solid var(--ai);border-radius:10px;background:var(--ai-bg);
   padding:20px;margin-bottom:20px;}
 .rsum p{font-size:20px;font-weight:700;line-height:1.7;}
-.rsum .big{font-family:var(--f-num);font-size:34px;color:var(--ai-deep);
+.rsum .big{font-size:34px;color:var(--ai-ink);
   font-variant-numeric:tabular-nums;}
 
 /* ---- 判定アイコン。絵文字は環境で崩れるので図形で描く ---- */
@@ -206,11 +215,18 @@ html[data-fs="l"] .opt{font-size:21px;} html[data-fs="xl"] .opt{font-size:25px;m
 .mark{position:absolute;left:20px;top:22px;width:40px;height:40px;border-radius:50%;
   display:grid;place-items:center;border:3px solid;}
 .card.ok  .mark{border-color:var(--midori);background:var(--midori-bg);}
-.card.ng  .mark{border-color:#8A837A;background:var(--paper-3);}
+.card.ng  .mark{border-color:var(--ct-text-3);background:var(--paper-3);}
 .card.alert .mark{border-color:var(--shu);background:var(--shu-bg);}
 .mark svg{width:22px;height:22px;}
 .card .stepno{font-family:var(--f-num);font-size:13px;color:var(--ink-sub);
   letter-spacing:.08em;display:block;margin-bottom:4px;}
+/* スマホは本文の幅を優先: アイコンを左余白から番号の横へ移す */
+@media (max-width:480px){
+  .card{padding-left:20px;}
+  .mark{top:16px;left:auto;right:16px;width:34px;height:34px;}
+  .mark svg{width:18px;height:18px;}
+  .card .stepno{line-height:34px;margin-bottom:8px;}
+}
 
 /* ---- 結果はひとつずつ静かに現れる(にぎやかな動きは付けない) ---- */
 @keyframes rise{from{opacity:0;transform:translateY(10px);}to{opacity:1;transform:none;}}
@@ -220,8 +236,55 @@ html[data-fs="l"] .opt{font-size:21px;} html[data-fs="xl"] .opt{font-size:25px;m
 .toolnote{font-size:16px;color:var(--ink-sub);margin-top:12px;}
 .tools button{flex:1 1 200px;min-height:60px;font-family:inherit;font-size:17px;
   font-weight:700;border:2px solid var(--ai);background:var(--paper-2);
-  color:var(--ai-deep);border-radius:8px;cursor:pointer;padding:14px;}
+  color:var(--ai-ink);border-radius:8px;cursor:pointer;padding:14px;}
 .tools button:hover{background:var(--ai-bg);}
+
+svg [stroke="#1F4E6B"]{stroke:var(--ai);} svg [fill="#1F4E6B"]{fill:var(--ai);}
+svg [stroke="#B5442E"]{stroke:var(--shu);} svg [fill="#B5442E"]{fill:var(--shu);}
+svg [stroke="#2E6B4B"]{stroke:var(--midori);} svg [fill="#2E6B4B"]{fill:var(--midori);}
+svg [fill="#FFF"],svg [fill="#FFFFFF"]{fill:var(--paper-2);}
+svg [fill="#EFEADD"]{fill:var(--paper-3);}
+svg [stroke="#8A837A"]{stroke:var(--ct-text-3);}
+.act.act--ok{border-color:var(--midori);background:var(--midori-bg);}
+.act h3 .ct-pr{margin-left:8px;}
+
+/* ---- 1問1画面(JSが動くときだけ。動かなければ5問を縦に並べた従来の形) ----
+   選ぶと次へ進むので「選ぶ→スクロール→探す」が要らない。戻るは常に左上 */
+.hero .start{margin-top:24px;}
+.stepbar{display:none;}
+#qs.is-step .stepbar{display:grid;grid-template-columns:auto 1fr auto;align-items:center;gap:12px;
+  position:sticky;top:0;z-index:var(--ct-z-header);background:var(--paper);padding:12px 0 10px;}
+.stepbar .back{min-height:48px;padding:8px 14px;font-family:inherit;font-size:16px;font-weight:700;
+  border:2px solid var(--line);background:var(--paper-2);color:var(--ink);border-radius:var(--ct-r-pill);cursor:pointer;}
+.stepbar .back:disabled{visibility:hidden;}
+.stepbar .ct-progress{height:8px;}
+.stepbar .cnt{font-family:var(--f-num);font-weight:700;font-variant-numeric:tabular-nums;color:var(--ai-ink);}
+#qs.is-step .q{display:none;margin-top:6px;}
+#qs.is-step .q.is-current{display:block;animation:rise .32s var(--ct-ease) both;}
+#qs.is-step .q .num,#qs.is-step .progress{display:none;}
+#qs.is-step #go{display:none;}
+#qs.is-step.on-last #go{display:block;}
+.opt{transition:border-color var(--ct-dur-1),background var(--ct-dur-1),transform var(--ct-dur-1);}
+.opt:active{transform:scale(.985);}
+.q h2:focus{outline:none;}
+
+/* ---- 結果: 回答の振り返りと、カードの時間差表示 ---- */
+.mine{border:2px solid var(--line);border-radius:10px;background:var(--paper-2);padding:16px 18px;margin:0 0 20px;}
+.mine b{display:block;font-size:16px;margin-bottom:6px;}
+.mine ul{list-style:none;font-size:16px;color:var(--ink-sub);line-height:1.8;}
+.mine li{padding:6px 0;border-top:1px solid var(--line);}
+.mine li:first-child{border-top:0;}
+.mine li span{display:block;font-size:14px;}
+.mine li strong{display:block;color:var(--ink);font-size:17px;line-height:1.5;}
+.mine .edit{margin-top:10px;min-height:48px;font-family:inherit;font-size:16px;font-weight:700;
+  border:2px solid var(--ai);background:var(--paper-2);color:var(--ai-ink);border-radius:var(--ct-r-pill);padding:8px 18px;cursor:pointer;}
+.nophone{font-size:16px;color:var(--ink-sub);margin:-8px 0 18px;}
+
+/* ---- よくある質問 ---- */
+.faq{margin:44px 0 0;}
+.faq h2{font-family:var(--f-min);font-size:24px;border-bottom:2px solid var(--line);padding-bottom:10px;margin-bottom:8px;}
+.faq h3{font-size:18px;line-height:1.6;margin:22px 0 6px;}
+.faq p{font-size:17px;color:var(--ink-sub);}
 
 @media print{
   .sizebar,.tools,.btn,#qs,.reads,.hero .lead{display:none!important;}
@@ -240,7 +303,8 @@ html[data-fs="l"] .opt{font-size:21px;} html[data-fs="xl"] .opt{font-size:25px;m
     <span class="lead">⚠ 2027年3月31日が期限です</span>
     <h1>相続した家と土地、<br><span class="em">どうする</span>か決まっていますか</h1>
     <p class="desc">5つの質問に答えるだけで、いま選べる道と、いつまでに動けばよいかが分かります。
-    お名前やメールアドレスの入力はありません。</p>
+    お名前・電話番号・メールアドレスの入力はありません。</p>
+    <a class="btn start" href="#qs" id="start">5つの質問に答える（約1分）</a>
     <svg class="hero-art" viewBox="0 0 440 210" role="img"
          aria-label="相続関係説明図から、実家の家屋と土地、そして名義の書類へつながる図">
       <!-- 相続関係説明図。相続登記で実際に描く書類で、このサイトの主題そのもの -->
@@ -282,6 +346,11 @@ html[data-fs="l"] .opt{font-size:21px;} html[data-fs="xl"] .opt{font-size:25px;m
   </div>
 
   <form id="qs">
+    <div class="stepbar">
+      <button type="button" class="back" id="back">← 戻る</button>
+      <div class="ct-progress" aria-hidden="true"><i id="stepfill"></i></div>
+      <span class="cnt" id="stepcnt" aria-live="polite">1 / 5</span>
+    </div>
     <div class="q" data-q="0">
       <span class="num">質問 1 / 5</span>
       <div class="qhead"><svg class="qicon" viewBox="0 0 48 48" aria-hidden="true">
@@ -405,6 +474,23 @@ html[data-fs="l"] .opt{font-size:21px;} html[data-fs="xl"] .opt{font-size:25px;m
 
   <div id="result" role="region" aria-live="polite"></div>
 
+  <section class="faq" aria-labelledby="faqh">
+    <h2 id="faqh">よくある質問</h2>
+    <h3>相続した実家は、いつまでに名義変更しないといけませんか</h3>
+    <p>相続で不動産を取得したと知った日から3年以内です（2024年4月1日から義務）。それより前に相続した分も対象で、その場合の期限は2027年3月31日です。正当な理由なく手続きしないと、10万円以下の過料の対象になります。</p>
+    <h3>いらない土地を国に引き取ってもらえますか</h3>
+    <p>相続土地国庫帰属制度で、土地だけを国に引き渡せる場合があります。建物が残っている、担保が付いている、境界がはっきりしないといった土地は対象外です。審査手数料（土地1筆あたり14,000円）と、10年分の管理費にあたる負担金（原則20万円）がかかります。</p>
+    <h3>実家だけ相続放棄することはできますか</h3>
+    <p>できません。相続放棄をすると、預貯金なども含めてすべての財産を受け取れなくなります。家庭裁判所への申し出は、相続を知った日から3か月以内が原則です。</p>
+    <h3>この診断で、名前や電話番号を聞かれますか</h3>
+    <p>聞きません。答えはこの画面の中だけで判定し、どこにも送りません。査定を頼むかどうかは、結果を見てからご自身で選べます。</p>
+  </section>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[
+  {"@type":"Question","name":"相続した実家は、いつまでに名義変更しないといけませんか","acceptedAnswer":{"@type":"Answer","text":"相続で不動産を取得したと知った日から3年以内です（2024年4月1日から義務）。それより前に相続した分も対象で、その場合の期限は2027年3月31日です。正当な理由なく手続きしないと、10万円以下の過料の対象になります。"}},
+  {"@type":"Question","name":"いらない土地を国に引き取ってもらえますか","acceptedAnswer":{"@type":"Answer","text":"相続土地国庫帰属制度で、土地だけを国に引き渡せる場合があります。建物が残っている、担保が付いている、境界がはっきりしないといった土地は対象外です。審査手数料（土地1筆あたり14,000円）と、10年分の管理費にあたる負担金（原則20万円）がかかります。"}},
+  {"@type":"Question","name":"実家だけ相続放棄することはできますか","acceptedAnswer":{"@type":"Answer","text":"できません。相続放棄をすると、預貯金なども含めてすべての財産を受け取れなくなります。家庭裁判所への申し出は、相続を知った日から3か月以内が原則です。"}},
+  {"@type":"Question","name":"この診断で、名前や電話番号を聞かれますか","acceptedAnswer":{"@type":"Answer","text":"聞きません。答えはこの画面の中だけで判定し、どこにも送りません。査定を頼むかどうかは、結果を見てからご自身で選べます。"}}]}</script>
+
   <div class="reads">
     <h2>もっとくわしく</h2>
     <a href="blog/souzoku-toki-kigen.html">相続した家の名義変更、いつまでにやればいいのか
@@ -434,7 +520,11 @@ var DEADLINE = new Date(2027, 2, 31);
 (function(){
   var d = Math.ceil((DEADLINE - new Date()) / 86400000);
   var el = document.getElementById("countdown");
-  el.textContent = d > 0 ? ("あと " + d.toLocaleString() + " 日") : "期限を過ぎています";
+  if(d <= 0){ el.textContent = "期限を過ぎています"; return; }
+  el.innerHTML = 'あと <span class="ct-num" id="cdn">' + d.toLocaleString() + '</span> 日';
+  document.addEventListener("DOMContentLoaded", function(){
+    if(window.CT) CT.countUp(document.getElementById("cdn"), d, {duration:1.2});
+  });
 })();
 
 
@@ -470,6 +560,33 @@ var MARK_TEXT = {ok:"使えます", ng:"使えません", alert:"注意が必要
 var st = {0:null, 1:null, 2:null, 3:null, 4:[]};
 var started = false;
 
+// ===== 1問1画面 =====
+// 選んだら次の質問へ自動で進む。5問目だけ複数選べるので「結果を見る」で進む
+var form = document.getElementById("qs");
+var QS = Array.prototype.slice.call(form.querySelectorAll(".q"));
+var cur = 0;
+form.classList.add("is-step");
+QS.forEach(function(q){ q.querySelector("h2").setAttribute("tabindex", "-1"); });
+function show(i, focus){
+  cur = i;
+  QS.forEach(function(q, k){ q.classList.toggle("is-current", k === i); });
+  form.classList.toggle("on-last", i === QS.length - 1);
+  document.getElementById("back").disabled = (i === 0);
+  document.getElementById("stepcnt").textContent = (i + 1) + " / " + QS.length;
+  document.getElementById("stepfill").style.setProperty("--p", (i / QS.length * 100) + "%");
+  var top = form.getBoundingClientRect().top;
+  if(top < 0) form.scrollIntoView({block:"start"});
+  if(focus) QS[i].querySelector("h2").focus({preventScroll:true});
+}
+document.getElementById("back").addEventListener("click", function(){ if(cur > 0) show(cur - 1, true); });
+document.getElementById("start").addEventListener("click", function(e){
+  e.preventDefault();
+  form.scrollIntoView({behavior: CT_REDUCED() ? "auto" : "smooth", block:"start"});
+  QS[cur].querySelector("h2").focus({preventScroll:true});
+});
+function CT_REDUCED(){ return window.matchMedia && matchMedia("(prefers-reduced-motion: reduce)").matches; }
+show(0);
+
 document.querySelectorAll(".opt").forEach(function(b){
   b.addEventListener("click", function(){
     if(!started){ started = true; track("diagnosis_start"); }
@@ -494,8 +611,12 @@ document.querySelectorAll(".opt").forEach(function(b){
       b.closest(".opts").querySelectorAll(".opt").forEach(function(x){
         x.setAttribute("aria-pressed", x === b ? "true" : "false");
       });
+      // 選んだ印が見えてから進む(押せたことが分かる間だけ待つ)
+      if(q === cur && q < QS.length - 1) setTimeout(function(){ show(q + 1, true); }, CT_REDUCED() ? 0 : 260);
     }
     refresh();
+    // 「特にない」は他を選ぶ余地がないので、そのまま結果へ
+    if(q === QS.length - 1 && b.dataset.v === "none") setTimeout(function(){ document.getElementById("go").click(); }, CT_REDUCED() ? 0 : 260);
   });
 });
 
@@ -622,21 +743,31 @@ document.getElementById("go").addEventListener("click", function(){
     missEl.textContent = "質問 " + missing.map(function(i){ return i + 1; }).join(" と ") +
       " がまだ答えられていません。赤く囲んだところをお選びください。";
     missEl.style.display = "block";
-    document.querySelector('.q[data-q="' + missing[0] + '"]')
-      .scrollIntoView({behavior:"smooth", block:"center"});
+    show(missing[0], true);
     return;
   }
   missEl.style.display = "none";
 
   var r = judge();
   var okCount = r.cards.filter(function(c){ return c.k === "ok"; }).length;
-  var h = '<h2 class="rhead">あなたの場合、こうなります</h2>';
+  var h = '<h2 class="rhead">あなたの場合、こうなります</h2>' +
+          '<p class="nophone">このサイトはお名前や電話番号を聞きません。下の会社に頼むかどうかは、読んでからご自身で決めてください。</p>';
+  var mine = QS.map(function(q, i){
+    var picked = Array.prototype.slice.call(q.querySelectorAll('.opt[aria-pressed="true"]'))
+      .map(function(o){ return o.childNodes[0].textContent.trim(); });
+    return '<li><span>' + q.querySelector("h2").textContent + '</span><strong>' + picked.join("、") + '</strong></li>';
+  }).join("");
+  h += '<div class="mine"><b>判定に使った答え</b><ul>' + mine + '</ul>' +
+       '<button type="button" class="edit" id="edit">答えを直す</button></div>';
 
   // 最初に結論を1行で置く。細かい説明は下のカードで読んでもらう
-  h += '<div class="rsum"><p>いま選べる道は <span class="big">' + okCount +
-       '</span> つ、注意が必要な点が <span class="big">' +
-       r.cards.filter(function(c){ return c.k === "alert"; }).length +
-       '</span> つ見つかりました。<br>下に1つずつ書いています。</p></div>';
+  var alertCount = r.cards.filter(function(c){ return c.k === "alert"; }).length;
+  h += '<div class="rsum"><p>' + (okCount
+       ? 'いま選べる道は <span class="big">' + okCount + '</span> つ'
+       : 'すぐに選べる道の前に、片づけることがあります') +
+       (alertCount ? (okCount ? '、' : '。') + '注意が必要な点が <span class="big">' + alertCount + '</span> つ見つかりました。'
+                   : (okCount ? '見つかりました。' : '')) +
+       '<br>下に1つずつ書いています。</p></div>';
 
   r.cards.forEach(function(c, i){
     h += '<div class="card ' + c.k + '">' +
@@ -649,7 +780,7 @@ document.getElementById("go").addEventListener("click", function(){
   // 名義変更(相続登記)は来訪者のほぼ全員に必要だが、A8に対応する案件が存在しない。
   // 無理に何かへ送らず、公的な窓口を案内する。中立性の担保にもなる。
   if(st[0] !== "pre"){
-    h += '<div class="act" style="border-color:#2E6B4B;background:#E6F0EA">' +
+    h += '<div class="act act--ok">' +
          '<h3>名義変更の相談先</h3>' +
          '<p>相続登記は法務局で手続きします。手続きの進め方は' +
          '<strong>法務局の無料相談</strong>で聞けます（予約制）。' +
@@ -671,7 +802,7 @@ document.getElementById("go").addEventListener("click", function(){
     var live = Object.keys(picked).map(function(k){ return picked[k]; })
                      .sort(function(a,b){ return a.rank - b.rank; });
     if(live.length){
-      h += '<div class="act"><h3>まず、いくらになるか確かめる</h3>' +
+      h += '<div class="act"><h3>まず、いくらになるか確かめる<span class="ct-pr">PR</span></h3>' +
            '<p>手放すと決めていなくても、金額が分かると考えやすくなります。' +
            '下の会社は、こうした事情のある不動産を専門に買い取っています。査定は無料です。</p>';
       live.slice(0,2).forEach(function(b){
@@ -699,7 +830,7 @@ document.getElementById("go").addEventListener("click", function(){
   if(st[0] !== "pre" && typeof ITEMS !== "undefined"){
     var liveItems = ITEMS.filter(function(it){ return it.url.indexOf("http") === 0; });
     if(liveItems.length){
-      h += '<div class="act"><h3>遺品・家財の査定</h3>' +
+      h += '<div class="act"><h3>遺品・家財の査定<span class="ct-pr">PR</span></h3>' +
            '<p>不動産だけでなく、家の中に残った品物（美術品・骨董・掛け軸・時計・切手など）も' +
            '査定で現金化できます。引き取り後の処分まで対応する会社もあります。</p>';
       liveItems.slice(0,2).forEach(function(it){
@@ -715,8 +846,8 @@ document.getElementById("go").addEventListener("click", function(){
   if(st[0] !== "pre" && typeof ADVISORS !== "undefined"){
     var liveAdv = ADVISORS.filter(function(a){ return a.url.indexOf("http") === 0; });
     if(liveAdv.length){
-      h += '<div class="act" style="border-color:#4A6FA5;background:#EDF2FB">' +
-           '<h3>相続税・手続きの相談</h3>' +
+      h += '<div class="act">' +
+           '<h3>相続税・手続きの相談<span class="ct-pr">PR</span></h3>' +
            '<p>相続税は申告期限が相続開始から10か月です。' +
            '税額を抑えられる控除・特例もあるので、早めに専門家に確認しておくと安心です。</p>';
       liveAdv.slice(0,2).forEach(function(a){
@@ -737,6 +868,17 @@ document.getElementById("go").addEventListener("click", function(){
   var el = document.getElementById("result");
   el.innerHTML = h;
   el.style.display = "block";
+  form.hidden = true;
+  // 結果は上から順に現れる。数字はカウントアップで到着を見せる
+  Array.prototype.slice.call(el.querySelectorAll(".card,.act,.warn")).forEach(function(c, i){
+    c.style.animationDelay = (CT_REDUCED() ? 0 : 0.12 * (i + 1)) + "s";
+  });
+  if(window.CT) Array.prototype.slice.call(el.querySelectorAll(".rsum .big")).forEach(function(b){
+    var n = +b.textContent; b.textContent = "0"; CT.countUp(b, n, {duration:.8});
+  });
+  document.getElementById("edit").addEventListener("click", function(){
+    el.style.display = "none"; form.hidden = false; show(0, true);
+  });
   // 共有シートに渡す本文。結果の要点だけを平易な日本語で組み立てる
   var summary = "【相続した家と土地 どうする診断】の結果\n\n" +
     r.cards.map(function(c, i){ return (i+1) + ". [" + c.b + "] " + c.h; }).join("\n") +
@@ -765,7 +907,7 @@ document.getElementById("go").addEventListener("click", function(){
   });
 
   track("diagnosis_complete", {tags: r.tags.join(",")});
-  el.scrollIntoView({behavior:"smooth", block:"start"});
+  el.scrollIntoView({behavior: CT_REDUCED() ? "auto" : "smooth", block:"start"});
 });
 
 // ===== 送客先 =====
