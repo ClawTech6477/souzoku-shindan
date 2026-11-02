@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://souzoku.clawtechjp.com/sitemap.xml
