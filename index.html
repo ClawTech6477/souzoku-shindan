@@ -772,12 +772,16 @@ document.getElementById("go").addEventListener("click", function(){
 
   // 最初に結論を1行で置く。細かい説明は下のカードで読んでもらう
   var alertCount = r.cards.filter(function(c){ return c.k === "alert"; }).length;
-  h += '<div class="rsum"><p>' + (okCount
-       ? 'いま選べる道は <span class="big">' + okCount + '</span> つ'
-       : 'すぐに選べる道の前に、片づけることがあります') +
-       (alertCount ? (okCount ? '、' : '。') + '注意が必要な点が <span class="big">' + alertCount + '</span> つ見つかりました。'
-                   : (okCount ? '見つかりました。' : '')) +
-       '<br>下に1つずつ書いています。</p></div>';
+  var deadlineDays = Math.ceil((DEADLINE - new Date()) / 86400000);
+  h += '<div class="rsum"><ul class="rsum-list">' +
+       '<li>期限: ' + (deadlineDays > 0 ? 'あと<span class="big">' + deadlineDays + '</span>日' : '期限を過ぎています') + '</li>' +
+       '<li>' + (okCount ? '選べる道: <span class="big">' + okCount + '</span>つ' : 'すぐに選べる道の前に、片づけることがあります') + '</li>' +
+       (alertCount >= 1 ? '<li>注意する点: <span class="big">' + alertCount + '</span>つ</li>' : '') +
+       '</ul>' +
+       '<p class="rsum-next">まずやる事</p>' +
+       '<a href="#act-meigi">1. 名義変更の相談先を見る</a> ' +
+       '<a href="#act-price">2. いくらになるか確かめる</a>' +
+       '</div>';
 
   r.cards.forEach(function(c, i){
     h += '<div class="card ' + c.k + '">' +
@@ -790,7 +794,7 @@ document.getElementById("go").addEventListener("click", function(){
   // 名義変更(相続登記)は来訪者のほぼ全員に必要だが、A8に対応する案件が存在しない。
   // 無理に何かへ送らず、公的な窓口を案内する。中立性の担保にもなる。
   if(st[0] !== "pre"){
-    h += '<div class="act act--ok">' +
+    h += '<div class="act act--ok" id="act-meigi">' +
          '<h3>名義変更の相談先</h3>' +
          '<p>相続登記は法務局で手続きします。手続きの進め方は' +
          '<strong>法務局の無料相談</strong>で聞けます（予約制）。' +
@@ -812,7 +816,7 @@ document.getElementById("go").addEventListener("click", function(){
     var live = Object.keys(picked).map(function(k){ return picked[k]; })
                      .sort(function(a,b){ return a.rank - b.rank; });
     if(live.length){
-      h += '<div class="act"><h3>まず、いくらになるか確かめる<span class="ct-pr">PR</span></h3>' +
+      h += '<div class="act" id="act-price"><h3>まず、いくらになるか確かめる<span class="ct-pr">PR</span></h3>' +
            '<p>手放すと決めていなくても、金額が分かると考えやすくなります。' +
            '下の会社は、こうした事情のある不動産を専門に買い取っています。査定は無料です。</p>';
       live.slice(0,2).forEach(function(b){
@@ -877,6 +881,7 @@ document.getElementById("go").addEventListener("click", function(){
 
   var el = document.getElementById("result");
   el.innerHTML = h;
+  el.querySelectorAll('.rsum a[href^="#act-"]').forEach(function(a){ if(!el.querySelector(a.getAttribute('href'))) a.remove(); });
   el.style.display = "block";
   form.hidden = true;
   var hero = document.querySelector(".hero");
