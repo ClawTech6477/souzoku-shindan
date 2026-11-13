@@ -767,8 +767,8 @@ document.getElementById("go").addEventListener("click", function(){
       .map(function(o){ return o.childNodes[0].textContent.trim(); });
     return '<li><span>' + q.querySelector("h2").textContent + '</span><strong>' + picked.join("、") + '</strong></li>';
   }).join("");
-  h += '<div class="mine"><b>判定に使った答え</b><ul>' + mine + '</ul>' +
-       '<button type="button" class="edit" id="edit">答えを直す</button></div>';
+  h += '<details class="mine"><summary><b>判定に使った答え</b></summary><ul>' + mine + '</ul>' +
+       '<button type="button" class="edit" id="edit">答えを直す</button></details>';
 
   // 最初に結論を1行で置く。細かい説明は下のカードで読んでもらう
   var alertCount = r.cards.filter(function(c){ return c.k === "alert"; }).length;
@@ -879,6 +879,8 @@ document.getElementById("go").addEventListener("click", function(){
   el.innerHTML = h;
   el.style.display = "block";
   form.hidden = true;
+  var hero = document.querySelector(".hero");
+  if(hero) hero.style.display = "none";
   // 結果は上から順に現れる。数字はカウントアップで到着を見せる
   Array.prototype.slice.call(el.querySelectorAll(".card,.act,.warn")).forEach(function(c, i){
     c.style.animationDelay = (CT_REDUCED() ? 0 : 0.12 * (i + 1)) + "s";
