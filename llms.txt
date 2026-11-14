@@ -1,0 +1,12 @@
+# 相続した家と土地 どうする診断
+
+> 相続した不動産を「売る・貸す・持つ」のどれにするかを、質問に答えて整理する無料の診断サイト。
+
+## 主なページ
+- [診断(登録不要)](https://souzoku.clawtechjp.com/)
+- [相続不動産の解説記事](https://souzoku.clawtechjp.com/blog/)
+
+## 出典と注意
+- 一般的な情報の提供であり、個別の税務・法律の助言ではない。記事には広告(PR)を含む。
+- 運営: ClawTech(https://clawtechjp.com/)
+- サイトマップ: https://souzoku.clawtechjp.com/sitemap.xml
