@@ -297,6 +297,25 @@ svg [stroke="#8A837A"]{stroke:var(--ct-text-3);}
 @media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important;}html{scroll-behavior:auto;}}
 </style>
 <script type="application/ld+json">{"@context": "https://schema.org", "@graph": [{"@type": "WebSite", "name": "相続した家と土地 どうする診断", "url": "https://souzoku.clawtechjp.com/", "inLanguage": "ja", "publisher": {"@type": "Organization", "name": "ClawTech", "url": "https://clawtechjp.com/"}}, {"@type": "Organization", "name": "ClawTech", "url": "https://clawtechjp.com/"}]}</script>
+<script>
+/* ct-aff-loop(2026-11-17): アフィボタンごとの 表示(cta_view)・クリック(cta_click) を GA4 へ送り、
+   a8_link_sync が毎日クリック率から CTR_W(並び順の点数に掛ける倍率。データが無ければ1)を書き換える。
+   link_id は a8mat の案件部分(サイトや画像が変わっても同じ案件なら同じ) */
+var CTR_W = {
+};
+function ctaKey(url){var m=String(url||"").match(/a8mat=[0-9A-Z]+\+([0-9A-Z]+\+[0-9A-Z]+)/);return m?m[1]:null}
+function ctaW(url){var k=ctaKey(url);return (k&&CTR_W[k])||1}
+document.addEventListener("DOMContentLoaded",function(){
+  var send=function(n,p){try{window.gtag&&gtag("event",n,p)}catch(e){}};
+  var seen=new WeakSet();
+  var io=("IntersectionObserver" in window)?new IntersectionObserver(function(es){es.forEach(function(e){
+    if(e.isIntersecting){var k=ctaKey(e.target.href);if(k)send("cta_view",{link_id:k});io.unobserve(e.target)}})},{threshold:0.5}):null;
+  var scan=function(){document.querySelectorAll('a[href*="px.a8.net"]').forEach(function(a){if(!seen.has(a)){seen.add(a);io&&io.observe(a)}})};
+  document.addEventListener("click",function(e){var a=e.target.closest&&e.target.closest('a[href*="px.a8.net"]');
+    if(a){var k=ctaKey(a.href);if(k)send("cta_click",{link_id:k,transport_type:"beacon"})}},true);
+  scan();new MutationObserver(scan).observe(document.body,{childList:true,subtree:true});
+});
+</script>
 </head>
 <body>
 
@@ -814,7 +833,7 @@ document.getElementById("go").addEventListener("click", function(){
       if(!picked[b.adv] || b.rank < picked[b.adv].rank) picked[b.adv] = b;
     });
     var live = Object.keys(picked).map(function(k){ return picked[k]; })
-                     .sort(function(a,b){ return a.rank - b.rank; });
+                     .sort(function(a,b){ return a.rank/ctaW(a.url) - b.rank/ctaW(b.url); });   // ctaW=クリック率の倍率(ct-aff-loop)
     if(live.length){
       h += '<div class="act" id="act-price"><h3>まず、いくらになるか確かめる<span class="ct-pr">PR</span></h3>' +
            '<p>手放すと決めていなくても、金額が分かると考えやすくなります。' +
