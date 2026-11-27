@@ -497,6 +497,43 @@ document.addEventListener("DOMContentLoaded",function(){
 
   <div id="result" role="region" aria-live="polite"></div>
 
+  <style>
+  .vs{--vs-acc:var(--ai,var(--ct-accent));margin:40px auto 0;padding:0 var(--ct-s-4,16px)}
+  .vs .vs__eb{font-size:13px;font-weight:700;color:var(--ink-soft,#5b6472);letter-spacing:.04em;margin-bottom:6px}
+  .vs h2{font-size:19px;font-weight:800;margin-bottom:6px}
+  .vs__lede{font-size:14px;color:var(--ink-soft,#5b6472);margin-bottom:14px}
+  .vs__tbl{border:1px solid var(--line,#e6e9ef);border-radius:16px;overflow:hidden;background:#fff}
+  .vs__head{display:grid;grid-template-columns:1fr 1fr}
+  .vs__head span{padding:10px 14px;font-size:13px;font-weight:800}
+  .vs__u{color:var(--vs-acc)}.vs__t{color:#8b94a3}
+  .vs__row{display:grid;grid-template-columns:1fr 1fr;border-top:1px solid var(--line,#e6e9ef)}
+  .vs__rh{grid-column:1/3;background:#fafbfe;padding:8px 14px;font-size:12px;font-weight:800;color:#8b94a3}
+  .vs__c{padding:13px 14px;font-size:14px;border-top:1px solid var(--line,#e6e9ef)}
+  .vs__c--u{background:color-mix(in srgb,var(--vs-acc) 8%,#fff)}
+  .vs__c b{font-weight:700;display:block;line-height:1.5}
+  .vs__c small{color:var(--ink-soft,#5b6472);font-size:11.5px;display:block;margin-top:3px}
+  .vs__c:not(.vs__c--u) b{color:#6b7280;font-weight:600}
+  .vs__note{font-size:11.5px;color:#8b94a3;margin-top:10px}
+  </style>
+  <section class="vs" aria-label="他の相続診断との違い">
+    <p class="vs__eb">他との違い</p>
+    <h2>「よくある相続診断・相談」との違い</h2>
+    <p class="vs__lede">同じ“無料”でも、連絡先の要否と出口が違います。</p>
+    <div class="vs__tbl">
+      <div class="vs__head"><span class="vs__u">この診断</span><span class="vs__t">よくある相続診断・相談</span></div>
+      <div class="vs__row"><div class="vs__rh">連絡先</div>
+        <div class="vs__c vs__c--u"><b>名前・電話なしで5問</b><small>約1分</small></div>
+        <div class="vs__c"><b>無料相談の予約(名前・電話)</b></div></div>
+      <div class="vs__row"><div class="vs__rh">出てくるもの</div>
+        <div class="vs__c vs__c--u"><b>売る/貸す/住む/放棄の整理＋登記期限＋国に引き取ってもらえるか</b></div>
+        <div class="vs__c"><b>専門家へ相談の案内</b></div></div>
+      <div class="vs__row"><div class="vs__rh">このあと</div>
+        <div class="vs__c vs__c--u"><b>見るだけでOK</b></div>
+        <div class="vs__c"><b>士業・不動産会社から連絡</b></div></div>
+    </div>
+    <p class="vs__note">比較は一般的な相続相談・診断サービスの公開情報にもとづく一般論で、特定の社名を指すものではありません。</p>
+  </section>
+
   <section class="faq" aria-labelledby="faqh">
     <h2 id="faqh">よくある質問</h2>
     <h3>相続した実家は、いつまでに名義変更しないといけませんか</h3>
